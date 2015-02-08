@@ -1,6 +1,6 @@
 import sys
 import MySQLdb
-
+import os
 
 #pedimos el nombre y el dominio que se usara
 
@@ -34,7 +34,8 @@ else:
 		print "El nombre de dominio ya esta registrado"
 		sys.exit
 	else:
-		print "Todo correcto"
+		#creamos la carpeta personal para el usuario que se esta creando
+		os.system("mkdir /srv/www/%s" %nombre)
 
 
 
