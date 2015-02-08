@@ -7,6 +7,10 @@ import sys
 nombre = (sys.argv[1])
 dominio = (sys.argv[2])
 
+nombre = raw_input("Introduce tu nombre de usuario: ")
+dominio = raw_input("Introduce el nombre de dominio: ")
+
+#print ("El usuario es: " + nombre + " y el nombre de dominio es: " +  dominio)
 
 
 
