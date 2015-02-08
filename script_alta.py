@@ -10,9 +10,6 @@ import MySQLdb
 nombre = raw_input("Introduce tu nombre de usuario: ")
 dominio = raw_input("Introduce el nombre de dominio: ")
 
-#print ("El usuario es: " + nombre + " y el nombre de dominio es: " +  dominio)
-
-
 
 #siguiente paso: conectarnos a la bbdd
 
