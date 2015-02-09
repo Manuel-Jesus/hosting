@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+
+
 import sys
 import MySQLdb
 import os
@@ -33,6 +36,8 @@ else:
 	else:
 		#creamos la carpeta personal para el usuario que se esta creando
 		os.system("mkdir /srv/www/%s" %nombre)
+		os.system("cp /var/www/index.html /srv/www/%s"%nombre)
+
 
 
 
