@@ -37,8 +37,5 @@ else:
 		#creamos la carpeta personal para el usuario que se esta creando
 		os.system("mkdir /srv/www/%s" %nombre)
 		os.system("cp /var/www/index.html /srv/www/%s"%nombre)
-
-
-
-
-
+		#creamos el virtualhost para el usuario que estamos creando
+		os.system("cp vhost.txt /srv/www/%s"%dominio)
