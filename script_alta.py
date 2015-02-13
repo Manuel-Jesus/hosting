@@ -38,4 +38,12 @@ else:
 		os.system("mkdir /srv/www/%s" %nombre)
 		os.system("cp /var/www/index.html /srv/www/%s"%nombre)
 		#creamos el virtualhost para el usuario que estamos creando
-		os.system("cp vhost.txt /srv/www/%s"%dominio)
+		fichero = "/home/manuelj/vhost.txt"
+		r_host = open(fichero, "r")
+		w_host = open('/etc/apache2/sites-available/' + dominio, "w")
+		buffer_fichero = r_host.read()
+		read_buffer_1 = buffer_fichero.replace("**usuario**", nombre)
+		read_buffer_2 = read_buffer_1.replace("**dominio**", dominio)
+		w_host.write(read_buffer_2)
+		r_host.close()
+		w_host.close()
