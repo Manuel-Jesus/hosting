@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-
 import sys
 import MySQLdb
 import os
+from random import choice
+import string
+
 
 #pedimos el nombre y el dominio que se usara
 
@@ -47,3 +49,26 @@ else:
 		w_host.write(read_buffer_2)
 		r_host.close()
 		w_host.close()
+		
+
+
+		#procedemos a la creacion del usuario virtual.
+		#INSERT INTO grupos VALUES ('users',6000,'gabo');
+		#INSERT INTO usuarios VALUES ('gabo', PASSWORD('gabo'),5000,6000, '/srv/www/gabo', '/bin/false/', 1,'gabo.com');
+
+		#generamos una contrasenya aleatoria
+		def GenPasswd(n):
+			return ''.join([choice(string.letters + string.digits) for i in range(n)])
+		contrasenna=GenPasswd(8)
+		print"esta es tu contrasenna para el usuario %s ftp:"%nombre, contrasenna
+
+		#insertamos el usuario en mysql
+		consultauid="select max(uid) from usuarios;"
+		cursor.execute(consultauid)
+		consulta_uid = cursor.fetchone()
+		#si la tabla esta vacia introduce el 5001
+		if consulta_uid[0] == None:
+			conuid=str("5001")
+		usermysql="insert into usuarios values('"+ nombre+"'," +"PASSWORD('"+contrasenna+"'),"+conuid+","+conuid+","+"'/srv/www/"+nombre+"',"+"'/bin/false',"+"1,'"+dominio+"');"
+		cursor.execute(usermysql)
+		conexion.commit()
