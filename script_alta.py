@@ -85,3 +85,18 @@ else:
                 print grantPerm
                 cursor.execute(grantPerm)
                 conexion.commit()
+
+
+                #creamos la zona dns para el usuario que se esta creando
+
+                ficherodb = "/home/manuelj/db.ususarionuevo"
+                r_db = open(ficherodb, "r")
+                w_db = open('/var/cache/bind9/' + dominio, "w")
+                buffer_ficherodb = r_db.read()
+                read_buffer = buffer_ficherodb("**dominio**", dominio)
+                w_db.write(read_buffer)
+                r_db.close()
+                w_db.close()
+
+
+                
