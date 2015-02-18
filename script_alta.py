@@ -88,12 +88,30 @@ else:
 
 
                 #creamos la zona dns para el usuario que se esta creando
+                ficherodominio="/home/manuelj/db.plantilla"
+                domain=open(ficherodominio, "r")
+                filew = open('/var/cache/bind/db.'+dominio, "w")
+                buff = domain.read()
+                variable1='**dominio**'
+                rbuff = buff.replace(variable1, dominio)
+                filew.write(rbuff)
+                domain.close()
+                filew.close()
 
-                fichero_db = "/home/manuelj/db.ususarionuevo"
-                r_db = open(fichero_db, "r")
-                w_db = open('/var/cache/bind9/' + dominio, "w")
-                buffer_fichero_db = r_db.read()
-                read_buffer = buffer_fichero_db("**dominio**", dominio)
-                w_db.write(read_buffer)
-                r_db.close()
-                w_db.close()
+
+                #creamos la nueva zona
+		            fichzona="/home/manuelj/zona"
+                zonadom=open(fichzona,"r")
+                zonabuff = zonadom.read()
+                char1='**dominio**'
+                cambio = zonabuff.replace(char1, dominio)
+                g=open("/etc/bind/named.conf.local","a")
+                g.write(cambio)
+                g.close()
+                zonadom.close()
+
+
+                #reiniciamos el servidor dns
+
+                rebootdns = os.system("service bind9 restart")
+                print "El usuario se ha creado correctamente")
