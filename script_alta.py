@@ -100,7 +100,7 @@ else:
 
 
                 #creamos la nueva zona
-		            fichzona="/home/manuelj/zona"
+		fichzona="/home/manuelj/zona"
                 zonadom=open(fichzona,"r")
                 zonabuff = zonadom.read()
                 char1='**dominio**'
@@ -114,4 +114,4 @@ else:
                 #reiniciamos el servidor dns
 
                 rebootdns = os.system("service bind9 restart")
-                print "El usuario se ha creado correctamente")
+                print "El usuario se ha creado correctamente"
