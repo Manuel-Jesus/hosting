@@ -22,6 +22,7 @@ else:
         os.system("a2dissite %s>/dev/null"%dominio)
         #borramos los virtualhosts
         os.system("rm -r /etc/apache2/sites-available/%s"%dominio)
+        os.system("rm -r /etc/apache2/sites-enabled/%s"%dominio)
         #reiniciamos apache
         os.system("service apache2 restart>/dev/null")
         #borramos el usuario de mysql y las bases de datos
@@ -41,5 +42,5 @@ else:
         #borramos la zona del fichero named.conf.local
         os.system("sed '/zone " + '"%s"'% dominio + "/,/};/d' /etc/bind/named.conf.local > temporal")
         os.system("mv temporal /etc/bind/named.conf.local")
-        print "El usuario fue elimindado correctamente y ya no está en el hosting"
+        print "El usuario fue elimindado correctamente y ya no esta en el hosting"
 

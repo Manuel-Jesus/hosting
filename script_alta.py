@@ -40,7 +40,7 @@ else:
                 os.system("mkdir /srv/www/%s" %nombre)
                 os.system("cp /var/www/index.html /srv/www/%s"%nombre)
                 #creamos el virtualhost para el usuario que estamos creando
-                fichero = "/home/manuelj/vhost.txt"
+                fichero = "/home/manuelj/vhost"
                 r_host = open(fichero, "r")
                 w_host = open('/etc/apache2/sites-available/' + dominio, "w")
                 buffer_fichero = r_host.read()
@@ -49,6 +49,8 @@ else:
                 w_host.write(read_buffer_2)
                 r_host.close()
                 w_host.close()
+                os.system("a2ensite "+dominio)
+                os.system("service apache2 restart")
                 #consulta a realizar para añadir el usuario a mysql
                 #insertaUsuarioGrupo="INSERT INTO grupos VALUES('users', 6000,'"+nombre+"');'"
 
@@ -71,18 +73,22 @@ else:
                 if consulta_uid[0] == None:
                         conuid = "5001"
                 else:
-                        conuid = str(consulta_uid[0])
-                usermysql="insert into usuarios values('"+ nombre+"'," +"PASSWORD('"+contrasenna+"'),"+conuid+","+conuid+","+"'/srv/www/"+nombre+"',"+"'/bin/false',"+"1,'"+dominio+"');"
+                        conuid = str(int(consulta_uid[0])+1)
+                usermysql="insert into usuarios values('"+ nombre+"'," +"PASSWORD('"+contrasenna+"'),"+conuid+",33,'/srv/www/"+nombre+"',"+"'/bin/false',"+"1,'"+dominio+"');"
                 cursor.execute(usermysql)
                 conexion.commit()
-
+                #cambiamos los permisos del directorio para que el usuario pueda subir datos y acceder apache
+                chown="chown "+conuid+":www-data /srv/www/"+nombre+" -R"
+                chmod="chmod 770 -R /srv/www/"+nombre
+                os.system(chown)
+                os.system(chmod)
 
                 #creamos una base de datos con una contraseña para el usuario
                 cursor.execute("create database my"+nombre+";")
                 passwdMysql=GenPasswd(8)
                 #print "pass mysql "+passwdMysql
                 grantPerm="grant all on my"+nombre+".* to 'my"+nombre+"'@'localhost' identified by '"+passwdMysql+"';"
-                print grantPerm
+                print "la contraseña del musuario my"+nombre+" es: " + passwdMysql
                 cursor.execute(grantPerm)
                 conexion.commit()
 

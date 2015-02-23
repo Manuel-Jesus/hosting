@@ -1,6 +1,7 @@
 <VirtualHost *:80>
         ServerAdmin webmaster@localhost
-        ServerName www.**dominio**
+        ServerName **dominio**
+        ServerAlias www.**dominio**
         DocumentRoot /srv/www/**usuario**
         <Directory />
                 Options FollowSymLinks
